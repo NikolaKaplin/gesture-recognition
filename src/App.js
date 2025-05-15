@@ -40,8 +40,9 @@ import raised_fist from "./img/raised_fist.png";
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-
+  const [net, setNet] = useState(null);
   const [emoji, setEmoji] = useState(null);
+  
   const images = {
     thumbs_up: thumbs_up,
     victory: victory,
@@ -62,7 +63,8 @@ function App() {
   };
 
   const runHandpose = async () => {
-    const net = await handpose.load();
+    if (!net) setNet(await handpose.load());
+  
     //console.log("handpose model loaded");
     // loop and detect hand
     setInterval(() => {
